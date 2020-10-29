@@ -9,7 +9,7 @@ const SITE_URL = 'https://www.stadt-bremerhaven.de'
 const SITE_NAME = 'Caschys Blog'
 const POST_IMAGES = true // auf false setzen, wenn Bilder-URL unklar oder Bilder unerwünscht sind
 
-// COLOR CONFIG FÜR MEDIUM  UND LARGE WIDGET
+// COLOR CONFIG
 var BACKGROUND_GRADIENT = false // Widget Hintergrund; true = Farbverlauf, false = einfarbig
 var BACKGROUND_COLOR = new Color("#1c1c1e") // Wird verwendet wenn BACKGROUND_GRADIENT = false
 var BACKGROUND_GRADIENT_COLOR_TOP = new Color("#48484a") // Farbverlauf Farbe oben
