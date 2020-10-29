@@ -8,6 +8,7 @@ var WIDGET_SIZE = 'small' // small, medium, large // lässt sich durch Widget Pa
 const SITE_URL = 'https://www.stadt-bremerhaven.de'
 const SITE_NAME = 'Caschys Blog'
 const POST_IMAGES = true // auf false setzen, wenn Bilder-URL unklar oder Bilder unerwünscht sind
+// Note: Die Kombination POST_IMAGES = true + WIDGET_SIZE = small ignoriert die BACKGROUND_GRADIENT_COLOR Werte bei kleinen Widgets
 
 // COLOR CONFIG
 var BACKGROUND_GRADIENT = false // Widget Hintergrund; true = Farbverlauf, false = einfarbig
