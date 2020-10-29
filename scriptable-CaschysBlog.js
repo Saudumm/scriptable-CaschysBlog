@@ -15,6 +15,9 @@ var BACKGROUND_GRADIENT = false // Widget Hintergrund; true = Farbverlauf, false
 var BACKGROUND_COLOR = new Color("#1c1c1e") // Wird verwendet wenn BACKGROUND_GRADIENT = false
 var BACKGROUND_GRADIENT_COLOR_TOP = new Color("#48484a") // Farbverlauf Farbe oben
 var BACKGROUND_GRADIENT_COLOR_BTM = new Color("#2c2c2e") // Farbverlauf Farbe unten
+const FONT_COLOR_SITENAME = Color.white() // Schriftfarbe Seitenname
+const FONT_COLOR_HEADLINE = Color.white() // Schriftfarbe Schlagzeile
+const FONT_COLOR_POST_DATE = Color.lightGray() // Schriftfarbe Datum/Uhrzeit
 
 // DO NOT CHANGE
 // JSON URL für Posts (Wordpress Standard)
@@ -57,42 +60,42 @@ Script.setWidget(widget)
 Script.complete()
 
 async function createWidget(items) {
-    const data = await getData()
-    const list = new ListWidget()
+    const data = await getData();
+    const list = new ListWidget();
 
     const siteName = list.addText(SITE_NAME.toUpperCase());
-    siteName.font = Font.heavyMonospacedSystemFont(13)
+    siteName.font = Font.heavyMonospacedSystemFont(13);
+    siteName.textColor = FONT_COLOR_SITENAME;
 
-    list.addSpacer()
+    list.addSpacer();
     
     if (data) {
         if (NUMBER_OF_POSTS == 1) {
-            if (POST_IMAGES == true) {
-                // Hintergrundbild laden
-                list.backgroundImage = await getImage(data.post1BG);
+            // Hintergrundbild laden
+            list.backgroundImage = await getImage(data.post1BG);
 
-                // Gradient über Hintergrundbild, damit Text lesbar wird
-                BACKGROUND_GRADIENT = true
-                BACKGROUND_GRADIENT_COLOR_TOP = new Color('1c1c1e', 0.4)
-                BACKGROUND_GRADIENT_COLOR_BTM = new Color('1c1c1e', 0.9)
-
-                // Für bessere Lesbarkeit ein kleiner Schatten um den Seitennamen
-                siteName.shadowRadius = 1
-                siteName.shadowColor = Color.black()
-            }
+            // Gradient über Hintergrundbild, damit Text lesbar wird
+            BACKGROUND_GRADIENT = true;
+            BACKGROUND_GRADIENT_COLOR_TOP = new Color('#000000', 0.4);
+            BACKGROUND_GRADIENT_COLOR_BTM = new Color('#000000', 1);
+   
+            // Für bessere Lesbarkeit ein kleiner Schatten um den Seitennamen
+            siteName.shadowRadius = 1;
+            siteName.shadowColor = Color.black();
             
-            const postStack = list.addStack()
-            postStack.layoutVertically()
+            const postStack = list.addStack();
+            postStack.layoutVertically();
 
             const labelPost1DateTime = postStack.addText(convertDateString(data.post1DateTime));
-            labelPost1DateTime.font = Font.heavyMonospacedSystemFont(12)
-            labelPost1DateTime.textColor = Color.lightGray()
+            labelPost1DateTime.font = Font.heavyMonospacedSystemFont(12);
+            labelPost1DateTime.textColor = FONT_COLOR_POST_DATE;
             
-            const labelPost1Headline = postStack.addText(data.post1Title)
-            labelPost1Headline.font = Font.heavyMonospacedSystemFont(12)
+            const labelPost1Headline = postStack.addText(data.post1Title);
+            labelPost1Headline.font = Font.heavyMonospacedSystemFont(12);
+            labelPost1Headline.textColor = FONT_COLOR_HEADLINE;
             labelPost1Headline.lineLimit = 3;
             
-            list.url = data.post1URL
+            list.url = data.post1URL;
             
         } else if (NUMBER_OF_POSTS >= 2) {
             // Reihe für Post 1
@@ -105,21 +108,20 @@ async function createWidget(items) {
 
             const labelPost1DateTime = stackColumn1.addText(convertDateString(data.post1DateTime));
             labelPost1DateTime.font = Font.heavyMonospacedSystemFont(12)
-            labelPost1DateTime.textColor = Color.gray()
+            labelPost1DateTime.textColor = FONT_COLOR_POST_DATE
 
             const labelPost1Headline = stackColumn1.addText(data.post1Title)
             labelPost1Headline.font = Font.heavyMonospacedSystemFont(12)
+            labelPost1Headline.textColor = FONT_COLOR_HEADLINE;
             labelPost1Headline.lineLimit = 2;
-            
-            if (POST_IMAGES == true) {
-                stackRow1.addSpacer()
-                var post1IMG = await getImage(data.post1Thumbnail);
-                post1IMG = stackRow1.addImage(post1IMG)
-                post1IMG.imageSize = new Size(65,45)
-                post1IMG.cornerRadius = 8
-                post1IMG.rightAlignImage();
-            }
-            
+        
+            stackRow1.addSpacer()
+            var post1IMG = await getImage(data.post1Thumbnail);
+            post1IMG = stackRow1.addImage(post1IMG)
+            post1IMG.imageSize = new Size(65,45)
+            post1IMG.cornerRadius = 8
+            post1IMG.rightAlignImage();
+        
             list.addSpacer()
 
             // Reihe für Post 2
@@ -132,20 +134,19 @@ async function createWidget(items) {
 
             const labelPost2DateTime = stackColumn2.addText(convertDateString(data.post2DateTime));
             labelPost2DateTime.font = Font.heavyMonospacedSystemFont(12)
-            labelPost2DateTime.textColor = Color.gray()
+            labelPost2DateTime.textColor = FONT_COLOR_POST_DATE
 
             const labelPost2Headline = stackColumn2.addText(data.post2Title)
             labelPost2Headline.font = Font.heavyMonospacedSystemFont(12)
+            labelPost2Headline.textColor = FONT_COLOR_HEADLINE;
             labelPost2Headline.lineLimit = 2;
 
-            if (POST_IMAGES == true) {
-                stackRow2.addSpacer()
-                var post2IMG = await getImage(data.post2Thumbnail);
-                post2IMG = stackRow2.addImage(post2IMG)
-                post2IMG.imageSize = new Size(65,45)
-                post2IMG.cornerRadius = 8
-                post2IMG.rightAlignImage();
-            }
+            stackRow2.addSpacer()
+            var post2IMG = await getImage(data.post2Thumbnail);
+            post2IMG = stackRow2.addImage(post2IMG)
+            post2IMG.imageSize = new Size(65,45)
+            post2IMG.cornerRadius = 8
+            post2IMG.rightAlignImage();
             
             if (NUMBER_OF_POSTS == 5) {
                 list.addSpacer()
@@ -160,20 +161,19 @@ async function createWidget(items) {
 
                 const labelPost3DateTime = stackColumn3.addText(convertDateString(data.post3DateTime));
                 labelPost3DateTime.font = Font.heavyMonospacedSystemFont(12)
-                labelPost3DateTime.textColor = Color.gray()
+                labelPost3DateTime.textColor = FONT_COLOR_POST_DATE;
 
                 const labelPost3Headline = stackColumn3.addText(data.post3Title);
                 labelPost3Headline.font = Font.heavyMonospacedSystemFont(12);
+                labelPost3Headline.textColor = FONT_COLOR_HEADLINE;
                 labelPost3Headline.lineLimit = 2;
-                
-                if (POST_IMAGES == true) {
-                    stackRow3.addSpacer()
-                    var post3IMG = await getImage(data.post3Thumbnail);
-                    post3IMG = stackRow3.addImage(post3IMG)
-                    post3IMG.imageSize = new Size(65,45)
-                    post3IMG.cornerRadius = 8
-                    post3IMG.rightAlignImage();
-                }
+
+                stackRow3.addSpacer()
+                var post3IMG = await getImage(data.post3Thumbnail);
+                post3IMG = stackRow3.addImage(post3IMG)
+                post3IMG.imageSize = new Size(65,45)
+                post3IMG.cornerRadius = 8
+                post3IMG.rightAlignImage();
                 
                 list.addSpacer()
                 
@@ -187,21 +187,20 @@ async function createWidget(items) {
 
                 const labelPost4DateTime = stackColumn4.addText(convertDateString(data.post4DateTime));
                 labelPost4DateTime.font = Font.heavyMonospacedSystemFont(12)
-                labelPost4DateTime.textColor = Color.gray()
+                labelPost4DateTime.textColor = FONT_COLOR_POST_DATE;
 
                 const labelPost4Headline = stackColumn4.addText(data.post4Title)
                 labelPost4Headline.font = Font.heavyMonospacedSystemFont(12)
+                labelPost4Headline.textColor = FONT_COLOR_HEADLINE;
                 labelPost4Headline.lineLimit = 2
 
-                if (POST_IMAGES == true) {
-                    stackRow4.addSpacer()
-                    var post4IMG = await getImage(data.post4Thumbnail);
-                    post4IMG = stackRow4.addImage(post4IMG)
-                    post4IMG.imageSize = new Size(65,45)
-                    post4IMG.cornerRadius = 8
-                    post4IMG.rightAlignImage();
-                }
-                
+                stackRow4.addSpacer()
+                var post4IMG = await getImage(data.post4Thumbnail);
+                post4IMG = stackRow4.addImage(post4IMG)
+                post4IMG.imageSize = new Size(65,45)
+                post4IMG.cornerRadius = 8
+                post4IMG.rightAlignImage();
+
                 list.addSpacer()
                 
                 // Reihe für Post 5
@@ -214,20 +213,19 @@ async function createWidget(items) {
 
                 const labelPost5DateTime = stackColumn5.addText(convertDateString(data.post5DateTime));
                 labelPost5DateTime.font = Font.heavyMonospacedSystemFont(12)
-                labelPost5DateTime.textColor = Color.gray()
+                labelPost5DateTime.textColor = FONT_COLOR_POST_DATE;
 
                 const labelPost5Headline = stackColumn5.addText(data.post5Title)
                 labelPost5Headline.font = Font.heavyMonospacedSystemFont(12)
+                labelPost5Headline.textColor = FONT_COLOR_HEADLINE;
                 labelPost5Headline.lineLimit = 2
 
-                if (POST_IMAGES == true) {
-                    stackRow5.addSpacer()
-                    var post5IMG = await getImage(data.post5Thumbnail);
-                    post5IMG = stackRow5.addImage(post5IMG)
-                    post5IMG.imageSize = new Size(65,45)
-                    post5IMG.cornerRadius = 8
-                    post5IMG.rightAlignImage();
-                }
+                stackRow5.addSpacer()
+                var post5IMG = await getImage(data.post5Thumbnail);
+                post5IMG = stackRow5.addImage(post5IMG)
+                post5IMG.imageSize = new Size(65,45)
+                post5IMG.cornerRadius = 8
+                post5IMG.rightAlignImage();
             }
         }
     } else {
