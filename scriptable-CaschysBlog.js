@@ -4,14 +4,16 @@
 // coded by Saudumm
 
 // WIDGET CONFIG
-// Grundkonfiguration, lässt sich durch Widget Parameter überschreiben
-var WIDGET_SIZE = 'small' // small, medium, large
+var WIDGET_SIZE = 'small' // small, medium, large // lässt sich durch Widget Parameter überschreiben
+const SITE_URL = 'https://www.stadt-bremerhaven.de'
+const SITE_NAME = 'Caschys Blog'
+const POST_IMAGES = true // auf false setzen, wenn Bilder-URL unklar oder Bilder unerwünscht sind
 
 // COLOR CONFIG FÜR MEDIUM  UND LARGE WIDGET
-const BACKGROUND_GRADIENT = false // Widget Hintergrund; true = Farbverlauf, false = einfarbig
-const BACKGROUND_COLOR = "#1c1c1e" // Wird verwendet wenn BACKGROUND_GRADIENT = false
-const BACKGROUND_GRADIENT_COLOR_TOP = "#48484a" // Farbverlauf Farbe oben
-const BACKGROUND_GRADIENT_COLOR_BTM = "#2c2c2e" // Farbverlauf Farbe unten
+var BACKGROUND_GRADIENT = false // Widget Hintergrund; true = Farbverlauf, false = einfarbig
+var BACKGROUND_COLOR = new Color("#1c1c1e") // Wird verwendet wenn BACKGROUND_GRADIENT = false
+var BACKGROUND_GRADIENT_COLOR_TOP = new Color("#48484a") // Farbverlauf Farbe oben
+var BACKGROUND_GRADIENT_COLOR_BTM = new Color("#2c2c2e") // Farbverlauf Farbe unten
 
 // DO NOT CHANGE
 // JSON URL für Posts (Wordpress Standard)
@@ -32,7 +34,7 @@ switch (WIDGET_SIZE) {
         NUMBER_OF_POSTS = 5;
         break
 }
-const JSON_API_URL = "https://www.stadt-bremerhaven.de/wp-json/wp/v2/posts/?filter[category_name]=country&per_page="+NUMBER_OF_POSTS
+const JSON_API_URL = SITE_URL+"/wp-json/wp/v2/posts/?filter[category_name]=country&per_page="+NUMBER_OF_POSTS
 
 let widget = await createWidget()
 
@@ -57,28 +59,26 @@ async function createWidget(items) {
     const data = await getData()
     const list = new ListWidget()
 
-    const siteName = list.addText('Caschys Blog'.toUpperCase());
+    const siteName = list.addText(SITE_NAME.toUpperCase());
     siteName.font = Font.heavyMonospacedSystemFont(13)
 
     list.addSpacer()
     
     if (data) {
         if (NUMBER_OF_POSTS == 1) {
-            // Hintergrundbild laden
-            list.backgroundImage = await getImage(data.post1BG);
+            if (POST_IMAGES == true) {
+                // Hintergrundbild laden
+                list.backgroundImage = await getImage(data.post1BG);
 
-            // Gradient über Hintergrundbild, damit Text lesbar wird
-            const gradient = new LinearGradient()
-            gradient.locations = [0, 1]
-            gradient.colors = [
-                new Color('1c1c1e', 0.4),
-                new Color('1c1c1e', 0.9)
-            ]
-            list.backgroundGradient = gradient
-   
-            // Für bessere Lesbarkeit ein kleiner Schatten um den Seitennamen
-            siteName.shadowRadius = 1
-            siteName.shadowColor = Color.black()
+                // Gradient über Hintergrundbild, damit Text lesbar wird
+                BACKGROUND_GRADIENT = true
+                BACKGROUND_GRADIENT_COLOR_TOP = new Color('1c1c1e', 0.4)
+                BACKGROUND_GRADIENT_COLOR_BTM = new Color('1c1c1e', 0.9)
+
+                // Für bessere Lesbarkeit ein kleiner Schatten um den Seitennamen
+                siteName.shadowRadius = 1
+                siteName.shadowColor = Color.black()
+            }
             
             const postStack = list.addStack()
             postStack.layoutVertically()
@@ -109,14 +109,16 @@ async function createWidget(items) {
             const labelPost1Headline = stackColumn1.addText(data.post1Title)
             labelPost1Headline.font = Font.heavyMonospacedSystemFont(12)
             labelPost1Headline.lineLimit = 2;
-        
-            stackRow1.addSpacer()
-            var post1IMG = await getImage(data.post1Thumbnail);
-            post1IMG = stackRow1.addImage(post1IMG)
-            post1IMG.imageSize = new Size(65,45)
-            post1IMG.cornerRadius = 8
-            post1IMG.rightAlignImage();
-        
+            
+            if (POST_IMAGES == true) {
+                stackRow1.addSpacer()
+                var post1IMG = await getImage(data.post1Thumbnail);
+                post1IMG = stackRow1.addImage(post1IMG)
+                post1IMG.imageSize = new Size(65,45)
+                post1IMG.cornerRadius = 8
+                post1IMG.rightAlignImage();
+            }
+            
             list.addSpacer()
 
             // Reihe für Post 2
@@ -135,12 +137,14 @@ async function createWidget(items) {
             labelPost2Headline.font = Font.heavyMonospacedSystemFont(12)
             labelPost2Headline.lineLimit = 2;
 
-            stackRow2.addSpacer()
-            var post2IMG = await getImage(data.post2Thumbnail);
-            post2IMG = stackRow2.addImage(post2IMG)
-            post2IMG.imageSize = new Size(65,45)
-            post2IMG.cornerRadius = 8
-            post2IMG.rightAlignImage();
+            if (POST_IMAGES == true) {
+                stackRow2.addSpacer()
+                var post2IMG = await getImage(data.post2Thumbnail);
+                post2IMG = stackRow2.addImage(post2IMG)
+                post2IMG.imageSize = new Size(65,45)
+                post2IMG.cornerRadius = 8
+                post2IMG.rightAlignImage();
+            }
             
             if (NUMBER_OF_POSTS == 5) {
                 list.addSpacer()
@@ -160,13 +164,15 @@ async function createWidget(items) {
                 const labelPost3Headline = stackColumn3.addText(data.post3Title);
                 labelPost3Headline.font = Font.heavyMonospacedSystemFont(12);
                 labelPost3Headline.lineLimit = 2;
-
-                stackRow3.addSpacer()
-                var post3IMG = await getImage(data.post3Thumbnail);
-                post3IMG = stackRow3.addImage(post3IMG)
-                post3IMG.imageSize = new Size(65,45)
-                post3IMG.cornerRadius = 8
-                post3IMG.rightAlignImage();
+                
+                if (POST_IMAGES == true) {
+                    stackRow3.addSpacer()
+                    var post3IMG = await getImage(data.post3Thumbnail);
+                    post3IMG = stackRow3.addImage(post3IMG)
+                    post3IMG.imageSize = new Size(65,45)
+                    post3IMG.cornerRadius = 8
+                    post3IMG.rightAlignImage();
+                }
                 
                 list.addSpacer()
                 
@@ -186,13 +192,15 @@ async function createWidget(items) {
                 labelPost4Headline.font = Font.heavyMonospacedSystemFont(12)
                 labelPost4Headline.lineLimit = 2
 
-                stackRow4.addSpacer()
-                var post4IMG = await getImage(data.post4Thumbnail);
-                post4IMG = stackRow4.addImage(post4IMG)
-                post4IMG.imageSize = new Size(65,45)
-                post4IMG.cornerRadius = 8
-                post4IMG.rightAlignImage();
-
+                if (POST_IMAGES == true) {
+                    stackRow4.addSpacer()
+                    var post4IMG = await getImage(data.post4Thumbnail);
+                    post4IMG = stackRow4.addImage(post4IMG)
+                    post4IMG.imageSize = new Size(65,45)
+                    post4IMG.cornerRadius = 8
+                    post4IMG.rightAlignImage();
+                }
+                
                 list.addSpacer()
                 
                 // Reihe für Post 5
@@ -211,12 +219,14 @@ async function createWidget(items) {
                 labelPost5Headline.font = Font.heavyMonospacedSystemFont(12)
                 labelPost5Headline.lineLimit = 2
 
-                stackRow5.addSpacer()
-                var post5IMG = await getImage(data.post5Thumbnail);
-                post5IMG = stackRow5.addImage(post5IMG)
-                post5IMG.imageSize = new Size(65,45)
-                post5IMG.cornerRadius = 8
-                post5IMG.rightAlignImage();
+                if (POST_IMAGES == true) {
+                    stackRow5.addSpacer()
+                    var post5IMG = await getImage(data.post5Thumbnail);
+                    post5IMG = stackRow5.addImage(post5IMG)
+                    post5IMG.imageSize = new Size(65,45)
+                    post5IMG.cornerRadius = 8
+                    post5IMG.rightAlignImage();
+                }
             }
         }
     } else {
@@ -229,12 +239,12 @@ async function createWidget(items) {
         const gradient = new LinearGradient()
         gradient.locations = [0, 1]
         gradient.colors = [
-            new Color(BACKGROUND_GRADIENT_COLOR_TOP),
-            new Color(BACKGROUND_GRADIENT_COLOR_BTM)
+            BACKGROUND_GRADIENT_COLOR_TOP,
+            BACKGROUND_GRADIENT_COLOR_BTM
         ]
         list.backgroundGradient = gradient
     } else {
-        list.backgroundColor = new Color(BACKGROUND_COLOR)
+        list.backgroundColor = BACKGROUND_COLOR
     }
     
     return list
@@ -252,7 +262,7 @@ async function getData() {
         
         if (NUMBER_OF_POSTS >= 1) {
             post1Title = loadedJSON[0].title.rendered;
-            post1Title = post1Title.replace("&#8211;", "-");
+            post1Title = formatHeadline(post1Title);
             post1ThumbnailURL = loadedJSON[0].jetpack_featured_media_url;
             //post1ThumbnailURL = post1ThumbnailURL.replace('.jpg', '-720x407.jpg');
             post1BG = loadedJSON[0].jetpack_featured_media_url;
@@ -261,7 +271,7 @@ async function getData() {
             
             if (NUMBER_OF_POSTS >= 2) {
                 post2Title = loadedJSON[1].title.rendered;
-                post2Title = post2Title.replace("&#8211;", "-");
+                post2Title = formatHeadline(post2Title);
                 post2DateTime = loadedJSON[1].date;
                 post2ThumbnailURL = loadedJSON[1].jetpack_featured_media_url;
                 //post2ThumbnailURL = post2ThumbnailURL.replace('.jpg', '-720x407.jpg');
@@ -269,21 +279,21 @@ async function getData() {
                 
                 if (NUMBER_OF_POSTS == 5) {
                     post3Title = loadedJSON[2].title.rendered;
-                    post3Title = post3Title.replace("&#8211;", "-");
+                    post3Title = formatHeadline(post3Title);
                     post3DateTime = loadedJSON[2].date;
                     post3ThumbnailURL = loadedJSON[2].jetpack_featured_media_url;
                     //post3ThumbnailURL = post3ThumbnailURL.replace('.jpg', '-720x407.jpg');
                     post3URL = loadedJSON[2].guid.rendered;
                     
                     post4Title = loadedJSON[3].title.rendered;
-                    post4Title = post4Title.replace("&#8211;", "-");
+                    post4Title = formatHeadline(post4Title);
                     post4DateTime = loadedJSON[3].date;
                     post4ThumbnailURL = loadedJSON[3].jetpack_featured_media_url;
                     //post4ThumbnailURL = post4ThumbnailURL.replace('.jpg', '-720x407.jpg');
                     post4URL = loadedJSON[3].guid.rendered;
                     
                     post5Title = loadedJSON[4].title.rendered;
-                    post5Title = post5Title.replace("&#8211;", "-");
+                    post5Title = formatHeadline(post5Title);
                     post5DateTime = loadedJSON[4].date;
                     post5ThumbnailURL = loadedJSON[4].jetpack_featured_media_url;
                     //post5ThumbnailURL = post5ThumbnailURL.replace('.jpg', '-720x407.jpg');
@@ -320,6 +330,40 @@ async function getData() {
     } catch (e) {
         return null;
     }
+}
+
+function formatHeadline(strHeadline) {
+    strHeadline = strHeadline.replace("&quot;", '"');
+    strHeadline = strHeadline.replace("&amp;", "&");
+    strHeadline = strHeadline.replace("&lt;", "<");
+    strHeadline = strHeadline.replace("&gt;", ">");
+    strHeadline = strHeadline.replace("&#34;", '"');
+    strHeadline = strHeadline.replace("&#38;", "&");
+    strHeadline = strHeadline.replace("&#60;", "<");
+    strHeadline = strHeadline.replace("&#62;", ">");
+    strHeadline = strHeadline.replace("&#338;", "Œ");
+    strHeadline = strHeadline.replace("&#339;", "œ");
+    strHeadline = strHeadline.replace("&#352;", "Š");
+    strHeadline = strHeadline.replace("&#353;", "š");
+    strHeadline = strHeadline.replace("&#376;", "Ÿ");
+    strHeadline = strHeadline.replace("&#710;", "ˆ");
+    strHeadline = strHeadline.replace("&#732;", "˜");
+    strHeadline = strHeadline.replace("&#8211;", "–");
+    strHeadline = strHeadline.replace("&#8212;", "—");
+    strHeadline = strHeadline.replace("&#8216;", "‘");
+    strHeadline = strHeadline.replace("&#8217;", "’");
+    strHeadline = strHeadline.replace("&#8218;", "‚");
+    strHeadline = strHeadline.replace("&#8220;", "“");
+    strHeadline = strHeadline.replace("&#8221;", "”");
+    strHeadline = strHeadline.replace("&#8222;", "„");
+    strHeadline = strHeadline.replace("&#8224;", "†");
+    strHeadline = strHeadline.replace("&#8225;", "‡");
+    strHeadline = strHeadline.replace("&#8240;", "‰");
+    strHeadline = strHeadline.replace("&#8249;", "‹");
+    strHeadline = strHeadline.replace("&#8250;", "›");
+    strHeadline = strHeadline.replace("&#8364;", "€");
+
+    return strHeadline;
 }
 
 function convertDateString(strDate) {
