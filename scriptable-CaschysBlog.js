@@ -72,7 +72,7 @@ async function createWidget(items) {
     if (data) {
         if (NUMBER_OF_POSTS == 1) {
             // Hintergrundbild laden
-            list.backgroundImage = await getImage(data.post1BG);
+            if (POST_IMAGES == true) { list.backgroundImage = await getImage(data.post1Thumbnail); }
 
             // Gradient über Hintergrundbild, damit Text lesbar wird
             BACKGROUND_GRADIENT = true;
@@ -115,13 +115,14 @@ async function createWidget(items) {
             labelPost1Headline.textColor = FONT_COLOR_HEADLINE;
             labelPost1Headline.lineLimit = 2;
         
-            stackRow1.addSpacer()
-            var post1IMG = await getImage(data.post1Thumbnail);
-            post1IMG = stackRow1.addImage(post1IMG)
-            post1IMG.imageSize = new Size(65,45)
-            post1IMG.cornerRadius = 8
-            post1IMG.rightAlignImage();
-        
+            if (POST_IMAGES == true) {
+                stackRow1.addSpacer()
+                var post1IMG = await getImage(data.post1Thumbnail);
+                post1IMG = stackRow1.addImage(post1IMG)
+                post1IMG.imageSize = new Size(45,45)
+                post1IMG.cornerRadius = 8
+                post1IMG.rightAlignImage();
+            }
             list.addSpacer()
 
             // Reihe für Post 2
@@ -141,12 +142,14 @@ async function createWidget(items) {
             labelPost2Headline.textColor = FONT_COLOR_HEADLINE;
             labelPost2Headline.lineLimit = 2;
 
-            stackRow2.addSpacer()
-            var post2IMG = await getImage(data.post2Thumbnail);
-            post2IMG = stackRow2.addImage(post2IMG)
-            post2IMG.imageSize = new Size(65,45)
-            post2IMG.cornerRadius = 8
-            post2IMG.rightAlignImage();
+            if (POST_IMAGES == true) {
+                stackRow2.addSpacer()
+                var post2IMG = await getImage(data.post2Thumbnail);
+                post2IMG = stackRow2.addImage(post2IMG)
+                post2IMG.imageSize = new Size(45,45)
+                post2IMG.cornerRadius = 8
+                post2IMG.rightAlignImage();
+            }
             
             if (NUMBER_OF_POSTS == 5) {
                 list.addSpacer()
@@ -168,12 +171,14 @@ async function createWidget(items) {
                 labelPost3Headline.textColor = FONT_COLOR_HEADLINE;
                 labelPost3Headline.lineLimit = 2;
 
-                stackRow3.addSpacer()
-                var post3IMG = await getImage(data.post3Thumbnail);
-                post3IMG = stackRow3.addImage(post3IMG)
-                post3IMG.imageSize = new Size(65,45)
-                post3IMG.cornerRadius = 8
-                post3IMG.rightAlignImage();
+                if (POST_IMAGES == true) {
+                    stackRow3.addSpacer()
+                    var post3IMG = await getImage(data.post3Thumbnail);
+                    post3IMG = stackRow3.addImage(post3IMG)
+                    post3IMG.imageSize = new Size(45,45)
+                    post3IMG.cornerRadius = 8
+                    post3IMG.rightAlignImage();
+                }
                 
                 list.addSpacer()
                 
@@ -194,12 +199,14 @@ async function createWidget(items) {
                 labelPost4Headline.textColor = FONT_COLOR_HEADLINE;
                 labelPost4Headline.lineLimit = 2
 
-                stackRow4.addSpacer()
-                var post4IMG = await getImage(data.post4Thumbnail);
-                post4IMG = stackRow4.addImage(post4IMG)
-                post4IMG.imageSize = new Size(65,45)
-                post4IMG.cornerRadius = 8
-                post4IMG.rightAlignImage();
+                if (POST_IMAGES == true) {
+                    stackRow4.addSpacer()
+                    var post4IMG = await getImage(data.post4Thumbnail);
+                    post4IMG = stackRow4.addImage(post4IMG)
+                    post4IMG.imageSize = new Size(45,45)
+                    post4IMG.cornerRadius = 8
+                    post4IMG.rightAlignImage();
+                }
 
                 list.addSpacer()
                 
@@ -220,12 +227,14 @@ async function createWidget(items) {
                 labelPost5Headline.textColor = FONT_COLOR_HEADLINE;
                 labelPost5Headline.lineLimit = 2
 
-                stackRow5.addSpacer()
-                var post5IMG = await getImage(data.post5Thumbnail);
-                post5IMG = stackRow5.addImage(post5IMG)
-                post5IMG.imageSize = new Size(65,45)
-                post5IMG.cornerRadius = 8
-                post5IMG.rightAlignImage();
+                if (POST_IMAGES == true) {
+                    stackRow5.addSpacer()
+                    var post5IMG = await getImage(data.post5Thumbnail);
+                    post5IMG = stackRow5.addImage(post5IMG)
+                    post5IMG.imageSize = new Size(45,45)
+                    post5IMG.cornerRadius = 8
+                    post5IMG.rightAlignImage();
+                }
             }
         }
     } else {
@@ -262,40 +271,40 @@ async function getData() {
         if (NUMBER_OF_POSTS >= 1) {
             post1Title = loadedJSON[0].title.rendered;
             post1Title = formatHeadline(post1Title);
-            post1ThumbnailURL = loadedJSON[0].jetpack_featured_media_url;
-            //post1ThumbnailURL = post1ThumbnailURL.replace('.jpg', '-720x407.jpg');
-            post1BG = loadedJSON[0].jetpack_featured_media_url;
+            if (POST_IMAGES == true) { post1ThumbnailURL = await getMediaURL(loadedJSON[0].featured_media); }
             post1URL = loadedJSON[0].guid.rendered;
             post1DateTime = loadedJSON[0].date;
+            
+            if (WIDGET_SIZE == 'small') {
+                let featuredMediaJSONURL = SITE_URL+"/wp-json/wp/v2/media/"+loadedJSON[0].featured_media;
+                let loadedMediaJSON = await new Request(featuredMediaJSONURL).loadJSON();
+                post1BG = loadedMediaJSON.media_details.sizes.medium_large.source_url;
+            }
             
             if (NUMBER_OF_POSTS >= 2) {
                 post2Title = loadedJSON[1].title.rendered;
                 post2Title = formatHeadline(post2Title);
                 post2DateTime = loadedJSON[1].date;
-                post2ThumbnailURL = loadedJSON[1].jetpack_featured_media_url;
-                //post2ThumbnailURL = post2ThumbnailURL.replace('.jpg', '-720x407.jpg');
+                if (POST_IMAGES == true) { post2ThumbnailURL = await getMediaURL(loadedJSON[1].featured_media); }
                 post2URL = loadedJSON[1].guid.rendered;
                 
                 if (NUMBER_OF_POSTS == 5) {
                     post3Title = loadedJSON[2].title.rendered;
                     post3Title = formatHeadline(post3Title);
                     post3DateTime = loadedJSON[2].date;
-                    post3ThumbnailURL = loadedJSON[2].jetpack_featured_media_url;
-                    //post3ThumbnailURL = post3ThumbnailURL.replace('.jpg', '-720x407.jpg');
+                    if (POST_IMAGES == true) { post3ThumbnailURL = await getMediaURL(loadedJSON[2].featured_media); }
                     post3URL = loadedJSON[2].guid.rendered;
                     
                     post4Title = loadedJSON[3].title.rendered;
                     post4Title = formatHeadline(post4Title);
                     post4DateTime = loadedJSON[3].date;
-                    post4ThumbnailURL = loadedJSON[3].jetpack_featured_media_url;
-                    //post4ThumbnailURL = post4ThumbnailURL.replace('.jpg', '-720x407.jpg');
+                    if (POST_IMAGES == true) { post4ThumbnailURL = await getMediaURL(loadedJSON[3].featured_media); }
                     post4URL = loadedJSON[3].guid.rendered;
                     
                     post5Title = loadedJSON[4].title.rendered;
                     post5Title = formatHeadline(post5Title);
                     post5DateTime = loadedJSON[4].date;
-                    post5ThumbnailURL = loadedJSON[4].jetpack_featured_media_url;
-                    //post5ThumbnailURL = post5ThumbnailURL.replace('.jpg', '-720x407.jpg');
+                    if (POST_IMAGES == true) { post5ThumbnailURL = await getMediaURL(loadedJSON[4].featured_media); }
                     post5URL = loadedJSON[4].guid.rendered;
                 }
             }
@@ -322,7 +331,6 @@ async function getData() {
             post3URL: post3URL,
             post4URL: post4URL,
             post5URL: post5URL,
-            post1BG: post1BG
         };
 
         return result;
@@ -336,10 +344,10 @@ function formatHeadline(strHeadline) {
     strHeadline = strHeadline.replace("&amp;", "&");
     strHeadline = strHeadline.replace("&lt;", "<");
     strHeadline = strHeadline.replace("&gt;", ">");
-    strHeadline = strHeadline.replace("&#34;", '"');
-    strHeadline = strHeadline.replace("&#38;", "&");
-    strHeadline = strHeadline.replace("&#60;", "<");
-    strHeadline = strHeadline.replace("&#62;", ">");
+    strHeadline = strHeadline.replace("&#034;", '"');
+    strHeadline = strHeadline.replace("&#038;", "&");
+    strHeadline = strHeadline.replace("&#060;", "<");
+    strHeadline = strHeadline.replace("&#062;", ">");
     strHeadline = strHeadline.replace("&#338;", "Œ");
     strHeadline = strHeadline.replace("&#339;", "œ");
     strHeadline = strHeadline.replace("&#352;", "Š");
@@ -379,4 +387,11 @@ function convertDateString(strDate) {
 async function getImage(url) {
   let req = new Request(url)
   return await req.loadImage()
+}
+
+async function getMediaURL(featuredMedia) {
+    let featuredMediaJSONURL = SITE_URL+"/wp-json/wp/v2/media/"+featuredMedia;
+    let loadedMediaJSON = await new Request(featuredMediaJSONURL).loadJSON();
+    let mediaURL = loadedMediaJSON.media_details.sizes.thumbnail.source_url;
+    return mediaURL;
 }
