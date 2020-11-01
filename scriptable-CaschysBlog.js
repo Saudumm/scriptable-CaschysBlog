@@ -18,7 +18,7 @@
  SITE_URL: address (URL) of the website you want to fetch posts from
  SITE_NAME: name of the website to display in the widget
  BG_IMAGE_NAME: CASE SENSITIVE! filename of the custom background image, set to none if you don't want a custom image
- - custom background image files have to be in the Scriptable iCloud Files directory (same as the script js file)
+ - Note: custom background image files have to be in the Scriptable iCloud Files directory (same as the script js file)
  */
 var WIDGET_SIZE = 'small';
 var SITE_URL = 'https://www.stadt-bremerhaven.de';
