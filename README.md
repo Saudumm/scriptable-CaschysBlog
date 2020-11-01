@@ -16,6 +16,12 @@ Scriptable für iOS: [Link](https://apps.apple.com/de/app/scriptable/id140545918
 - v1.5.1 - Fix für die Anzeige des Datums
 - v1.5.2 - Twitter Link hinzugefügt
 
+---
+
+_Falls mir jemand einen Kaffee ausgeben möchte 😊: https://ko-fi.com/saudumm_
+
+---
+
 ## Konfiguration:
 
 1. Skript zu Scriptable hinzufügen
