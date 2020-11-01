@@ -1,7 +1,7 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-blue; icon-glyph: city;
-// v1.5 coded by Saudumm
+// v1.5.1 coded by Saudumm
 // GitHub: https://github.com/Saudumm/scriptable-CaschysBlog
 
 /*  WIDGET PARAMETERS: you can long press on the widget on your homescreen and edit parameters
@@ -322,7 +322,7 @@ function formatHeadline(strHeadline) {
 
 function convertDateString(strDate) {
     let date_conv = new Date(strDate);
-    let dateTimeLocal = date_conv.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+    let dateTimeLocal = date_conv.toLocaleString([], {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'})
     return dateTimeLocal
 }
 
