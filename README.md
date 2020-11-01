@@ -15,13 +15,14 @@ Das Widget kann für die verschiedenen Größen angepasst werden. Dazu lange auf
 
 ![](https://github.com/Saudumm/scriptable-CaschysBlog/blob/main/widget-config.jpeg)
 
-Bei "Parameter" einen der folgenden Werte eingeben:
-- **small** (Standardwert) für kleine Widgets oder mittlere Widgets
-  - zeigt nur die aktuellste News inkl. Hintergrundbild an
-- **medium** für mittlere Widgets
-  - zeigt die beiden aktuellsten News an
-- **large** für große Widgets
-  - zeigt die fünf aktuellsten News an
+### Widget parameters
+
+- Beispiel: small|https://www.stadt-bremerhaven.de|Caschys Blog|background.jpg
+- Parameter Reihenfolge: widget size, site url, site name, background image
+- Parameter müssen durch | getrennt sein
+- Man kann auch Parameter weglassen, zum Beispiel das Hintergrundbild: small|https://www.stadt-bremerhaven.de|Caschys Blog
+- Man kann auch nur "small", "medium" oder "large" als Parameter setzen
+- Nicht gesetzte Parameter werden im Code durch die Standard Config genutzt
 
 ## Beispiele:
 ![](https://github.com/Saudumm/scriptable-CaschysBlog/blob/main/widget-examples.jpeg)
