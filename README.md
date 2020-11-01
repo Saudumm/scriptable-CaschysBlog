@@ -15,7 +15,7 @@ Das Widget kann für die verschiedenen Größen angepasst werden. Dazu lange auf
 
 ![](https://github.com/Saudumm/scriptable-CaschysBlog/blob/main/widget-config.jpeg)
 
-### Widget parameters
+### Widget Parameter
 
 - Beispiel: small|https://www.stadt-bremerhaven.de|Caschys Blog|background.jpg
 - Parameter Reihenfolge: widget size, site url, site name, background image
