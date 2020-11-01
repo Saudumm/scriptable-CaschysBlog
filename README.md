@@ -27,10 +27,10 @@ Man kann auch das Layout und den Hintergrund des Widgets anpassen. Einfach lange
 ![widget-config](https://github.com/Saudumm/scriptable-CaschysBlog/blob/main/widgetConfig.jpeg)
 
 ### Widget parameters
- - Beispiel: small|https://www.insidexbox.de|InsideXbox.de|xsx-console-blur.jpg
+ - Beispiel: small|https://www.stadt-bremerhaven.de|Caschys Blog|image-name.jpg
 - Parameter Reihenfolge: widget size, site url, site name, background image
 - Parameter müssen durch | getrennt sein
-- Man kann auch Parameter weglassen, zum Beispiel das Hintergrundbild: small|https://www.insidexbox.de|InsideXbox.de
+- Man kann auch Parameter weglassen, zum Beispiel das Hintergrundbild: small|https://www.stadt-bremerhaven.de|Caschys Blog
 - Man kann auch nur "small", "medium" oder "large" als Parameter setzen
 - Nicht gesetzte Parameter werden im Code durch die Standard Config genutzt
 
