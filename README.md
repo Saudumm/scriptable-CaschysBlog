@@ -1,3 +1,7 @@
+# DIESES SKRIPT WIRD NICHT MEHR LÄNGER VON MIR UNTERSTÜTZT.
+# BITTE NUTZT DAS NEUE SKRIPT : https://github.com/Saudumm/scriptable-News-Widget
+
+# Alte Beschreibung:
 # scriptable-CaschysBlog
 iOS Scriptable Widget für News von Caschys Blog (stadt-bremerhaven.de)
 
