@@ -1,8 +1,12 @@
 # DIESES SKRIPT WIRD NICHT MEHR LÄNGER VON MIR UNTERSTÜTZT.
-# BITTE NUTZT DAS NEUE SKRIPT : https://github.com/Saudumm/scriptable-News-Widget
+# BITTE NUTZT DAS NEUE SKRIPT:
+# https://github.com/Saudumm/scriptable-News-Widget
 
-# Alte Beschreibung:
-# scriptable-CaschysBlog
+---
+
+## Alte Beschreibung:
+
+## scriptable-CaschysBlog
 iOS Scriptable Widget für News von Caschys Blog (stadt-bremerhaven.de)
 
 Das Skript sollte auch für die meisten anderen WordPress Seiten funktionieren.
@@ -11,7 +15,7 @@ Das Skript sollte auch für die meisten anderen WordPress Seiten funktionieren.
 
 Scriptable für iOS: [Link](https://apps.apple.com/de/app/scriptable/id1405459188)
 
-# Changelog
+## Changelog
 
 - v1.0 - Erster Upload
 - v1.1 - Fix für Anzeige von Datum und Uhrzeit je nach Systemsprache
@@ -40,7 +44,7 @@ Man kann auch das Layout und den Hintergrund des Widgets anpassen. Einfach lange
 
 ![widget-config](https://github.com/Saudumm/scriptable-CaschysBlog/blob/main/widgetConfig.jpeg)
 
-### Widget parameters
+### Widget Parameters
  - Beispiel: small|https://www.stadt-bremerhaven.de|Caschys Blog|image-name.jpg
 - Parameter Reihenfolge: widget size, site url, site name, background image
 - Parameter müssen durch | getrennt sein
