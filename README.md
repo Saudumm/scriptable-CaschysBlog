@@ -2,8 +2,6 @@
 # BITTE NUTZT DAS NEUE SKRIPT:
 # https://github.com/Saudumm/scriptable-News-Widget
 
----
-
 ## Alte Beschreibung:
 
 ## scriptable-CaschysBlog
